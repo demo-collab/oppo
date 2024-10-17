@@ -1,0 +1,65 @@
+<?php
+// Sample associative array
+$arr = array("apple" => "red", "banana" => "yellow", "grape" => "purple");
+
+function reverseKeyValue($arr) {
+    $reversed = array();
+    foreach ($arr as $key => $value) {
+        $reversed[$value] = $key;
+    }
+    return $reversed;
+}
+
+function traverseRandomOrder($arr) {
+    $keys = array_keys($arr);
+    shuffle($keys);
+    foreach ($keys as $key) {
+        echo "$key => {$arr[$key]}\n";
+    }
+}
+
+function convertToVariables($arr) {
+    extract($arr);
+    foreach ($arr as $key => $value) {
+        echo "Variable \$$key = $value\n";
+    }
+}
+
+function displayElements($arr) {
+    foreach ($arr as $key => $value) {
+        echo "$key => $value\n";
+    }
+}
+
+do {
+    echo "\nMenu:
+    1. Reverse key-value pairs
+    2. Traverse elements in random order
+    3. Convert array elements to individual variables
+    4. Display array elements with key
+    5. Exit
+    Enter your choice: ";
+    
+    $choice = trim(fgets(STDIN));
+    
+    switch ($choice) {
+        case 1:
+            $reversedArr = reverseKeyValue($arr);
+            print_r($reversedArr);
+            break;
+        case 2:
+            traverseRandomOrder($arr);
+            break;
+        case 3:
+            convertToVariables($arr);
+            break;
+        case 4:
+            displayElements($arr);
+            break;
+        case 5:
+            exit("Exiting...\n");
+        default:
+            echo "Invalid choice. Try again.\n";
+    }
+} while (true);
+?>

@@ -1,0 +1,51 @@
+
+<?php
+// Read the file
+$filename = 'student.dat';
+if (!file_exists($filename)) {
+    die("File not found.");
+}
+
+$data = file($filename);
+$header = ["Roll No", "Name", "OS", "WT", "DS", "Python", "Java", "CN", "Percentage"];
+$students = [];
+
+// Process each line in the file
+foreach ($data as $line) {
+    $fields = explode(',', trim($line));
+    if (count($fields) < 7) {
+        continue; // Skip lines with insufficient data
+    }
+    $rollno = $fields[0];
+    $name = $fields[1];
+    $os = (float)$fields[2];
+    $wt = (float)$fields[3];
+    $ds = (float)$fields[4];
+    $python = (float)$fields[5];
+    $java = (float)$fields[6];
+    $cn = (float)$fields[7];
+
+    // Calculate percentage
+    $totalMarks = $os + $wt + $ds + $python + $java + $cn;
+    $percentage = ($totalMarks / 600) * 100; // Assuming each subject is out of 100
+
+    $students[] = [$rollno, $name, $os, $wt, $ds, $python, $java, $cn, number_format($percentage, 2)];
+}
+
+// Display data in tabular format
+echo "<table border='1'>";
+echo "<tr>";
+foreach ($header as $col) {
+    echo "<th>{$col}</th>";
+}
+echo "</tr>";
+
+foreach ($students as $student) {
+    echo "<tr>";
+    foreach ($student as $data) {
+        echo "<td>{$data}</td>";
+    }
+    echo "</tr>";
+}
+echo "</table>";
+?>

@@ -1,0 +1,78 @@
+//doctor table
+CREATE TABLE Doctor (
+    doc_no INT PRIMARY KEY,
+    dname VARCHAR(100),
+    address VARCHAR(255),
+    city VARCHAR(100),
+    area VARCHAR(100)
+);
+//hospital table
+CREATE TABLE Hospital (
+    hosp_no INT PRIMARY KEY,
+    hname VARCHAR(100),
+    hcity VARCHAR(100)
+);
+//doctor hospital table 
+CREATE TABLE Doctor_Hospital (
+    doc_no INT,
+    hosp_no INT,
+    FOREIGN KEY (doc_no) REFERENCES Doctor(doc_no),
+    FOREIGN KEY (hosp_no) REFERENCES Hospital(hosp_no),
+    PRIMARY KEY (doc_no, hosp_no)
+);
+//process.php
+<?php
+// Database connection details
+$servername = "localhost";
+$username = "your_username";
+$password = "your_password";
+$dbname = "your_database_name";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Accept Hospital name from user (for example, via a form)
+$hname = $_POST['hname']; // Make sure to sanitize input in production
+
+// SQL query to fetch doctors visiting the specified hospital
+$sql = "SELECT d.dname, d.address, d.city, d.area
+        FROM Doctor d
+        JOIN Doctor_Hospital dh ON d.doc_no = dh.doc_no
+        JOIN Hospital h ON dh.hosp_no = h.hosp_no
+        WHERE h.hname = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $hname);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Display results in a table
+if ($result->num_rows > 0) {
+    echo "<table border='1'>
+            <tr>
+                <th>Doctor Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Area</th>
+            </tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>{$row['dname']}</td>
+                <td>{$row['address']}</td>
+                <td>{$row['city']}</td>
+                <td>{$row['area']}</td>
+              </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "No doctors found for this hospital.";
+}
+
+$stmt->close();
+$conn->close();
+?>

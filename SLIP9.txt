@@ -1,0 +1,54 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $inputString = $_POST['inputString'];
+    $separator = $_POST['separator'];
+    $newSeparator = $_POST['newSeparator'];
+
+    // a. Split the string into separate words using the given separator
+    $words = explode($separator, $inputString);
+    
+    // b. Replace all occurrences of separator in the given string with some other separator
+    $replacedString = str_replace($separator, $newSeparator, $inputString);
+    
+    // e. Find the last word in the given string
+    $lastWord = end($words);
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Manipulation</title>
+</head>
+<body>
+    <h1>String Manipulation Form</h1>
+    <form method="post">
+        <label for="inputString">Enter a string:</label><br>
+        <input type="text" id="inputString" name="inputString" required><br><br>
+
+        <label for="separator">Select a separator:</label><br>
+        <select id="separator" name="separator" required>
+            <option value="#">#</option>
+            <option value="1">1</option>
+            <option value="%">%</option>
+            <option value="@">@</option>
+            <option value="!">!</option>
+            <option value=",">,</option>
+        </select><br><br>
+
+        <label for="newSeparator">Enter a new separator:</label><br>
+        <input type="text" id="newSeparator" name="newSeparator" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+        <h2>Results:</h2>
+        <p><strong>Words:</strong> <?php echo implode(', ', $words); ?></p>
+        <p><strong>Replaced String:</strong> <?php echo $replacedString; ?></p>
+        <p><strong>Last Word:</strong> <?php echo $lastWord; ?></p>
+    <?php endif; ?>
+</body>
+</html>

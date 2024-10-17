@@ -1,0 +1,69 @@
+//index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integer Operations</title>
+</head>
+<body>
+    <h2>Enter Two Integers</h2>
+    <form action="process.php" method="post">
+        <label for="num1">First Number (n):</label>
+        <input type="number" name="num1" id="num1" required>
+        <br>
+        <label for="num2">Second Number:</label>
+        <input type="number" name="num2" id="num2" required>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+//process.php
+<?php
+// Function to find the modulus
+function mod($a, $b) {
+    return $a % $b;
+}
+
+// Function to find the power
+function power($base, $exponent) {
+    return pow($base, $exponent);
+}
+
+// Function to find the sum of the first n numbers
+function sumOfFirstN($n) {
+    return ($n * ($n + 1)) / 2;
+}
+
+// Function to find the factorial
+function factorial($num) {
+    if ($num < 0) {
+        return "Undefined"; // Factorial is not defined for negative numbers
+    }
+    $fact = 1;
+    for ($i = 1; $i <= $num; $i++) {
+        $fact *= $i;
+    }
+    return $fact;
+}
+
+// Get input values
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $num1 = intval($_POST['num1']);
+    $num2 = intval($_POST['num2']);
+
+    // Perform operations
+    $modResult = mod($num1, $num2);
+    $powerResult = power($num1, $num2);
+    $sumResult = sumOfFirstN($num1);
+    $factorialResult = factorial($num2);
+
+    // Display results
+    echo "<h2>Results:</h2>";
+    echo "Modulus of $num1 and $num2: $modResult<br>";
+    echo "$num1 raised to the power of $num2: $powerResult<br>";
+    echo "Sum of the first $num1 numbers: $sumResult<br>";
+    echo "Factorial of $num2: $factorialResult<br>";
+}
+?>

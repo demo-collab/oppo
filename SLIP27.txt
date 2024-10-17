@@ -1,0 +1,17 @@
+<?php
+function copyFileContent($source, $destination) {
+    if (!file_exists($source)) {
+        return "Source file does not exist.";
+    }
+
+    $content = file_get_contents($source);
+    file_put_contents($destination, $content);
+    return "Content copied from $source to $destination successfully.";
+}
+
+$sourceFile = readline("Enter the source file name: ");
+$destinationFile = readline("Enter the destination file name: ");
+
+$result = copyFileContent($sourceFile, $destinationFile);
+echo $result;
+?>

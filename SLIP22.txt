@@ -1,0 +1,69 @@
+<?php
+
+class Queue {
+    private $items = [];
+
+    // Insert an element into the queue
+    public function enqueue($item) {
+        array_push($this->items, $item);
+        echo "$item has been added to the queue.\n";
+    }
+
+    // Delete an element from the queue
+    public function dequeue() {
+        if ($this->isEmpty()) {
+            echo "Queue is empty. Cannot dequeue.\n";
+            return;
+        }
+        $removedItem = array_shift($this->items);
+        echo "$removedItem has been removed from the queue.\n";
+    }
+
+    // Display the contents of the queue
+    public function display() {
+        if ($this->isEmpty()) {
+            echo "Queue is empty.\n";
+            return;
+        }
+        echo "Queue contents: " . implode(", ", $this->items) . "\n";
+    }
+
+    // Check if the queue is empty
+    public function isEmpty() {
+        return empty($this->items);
+    }
+}
+
+// Main program
+$queue = new Queue();
+
+while (true) {
+    echo "\nMenu:\n";
+    echo "1. Insert an element in queue\n";
+    echo "2. Delete an element from queue\n";
+    echo "3. Display the contents of queue\n";
+    echo "4. Exit\n";
+    echo "Choose an option: ";
+    $choice = intval(trim(fgets(STDIN)));
+
+    switch ($choice) {
+        case 1:
+            echo "Enter element to insert: ";
+            $element = trim(fgets(STDIN));
+            $queue->enqueue($element);
+            break;
+        case 2:
+            $queue->dequeue();
+            break;
+        case 3:
+            $queue->display();
+            break;
+        case 4:
+            echo "Exiting...\n";
+            exit;
+        default:
+            echo "Invalid option. Please try again.\n";
+    }
+}
+
+?>

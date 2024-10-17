@@ -1,0 +1,81 @@
+//data scheme 
+CREATE TABLE Student (
+    Stud_id INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Class VARCHAR(50)
+);
+
+CREATE TABLE Competition (
+    C_no INT PRIMARY KEY,
+    C_name VARCHAR(100),
+    Type VARCHAR(50)
+);
+
+CREATE TABLE Student_Competition (
+    Stud_id INT,
+    C_no INT,
+    Rank INT,
+    Year INT,
+    PRIMARY KEY (Stud_id, C_no),
+    FOREIGN KEY (Stud_id) REFERENCES Student(Stud_id),
+    FOREIGN KEY (C_no) REFERENCES Competition(C_no)
+);
+//<?php
+// Database connection
+$servername = "localhost";
+$username = "your_username"; // replace with your database username
+$password = "your_password"; // replace with your database password
+$dbname = "your_database"; // replace with your database name
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Accept competition name from user
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $competitionName = $_POST['competition_name'];
+
+    // Query to fetch students with 1st rank
+    $sql = "SELECT s.Stud_id, s.Name, s.Class
+            FROM Student s
+            JOIN Student_Competition sc ON s.Stud_id = sc.Stud_id
+            JOIN Competition c ON sc.C_no = c.C_no
+            WHERE c.C_name = ? AND sc.Rank = 1";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $competitionName);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Display results
+    if ($result->num_rows > 0) {
+        echo "<h3>Students who secured 1st rank in $competitionName:</h3>";
+        while ($row = $result->fetch_assoc()) {
+            echo "ID: " . $row["Stud_id"] . " - Name: " . $row["Name"] . " - Class: " . $row["Class"] . "<br>";
+        }
+    } else {
+        echo "No students found with 1st rank in $competitionName.";
+    }
+
+    $stmt->close();
+}
+
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Competition Results</title>
+</head>
+<body>
+    <form method="post" action="">
+        <label for="competition_name">Enter Competition Name:</label>
+        <input type="text" id="competition_name" name="competition_name" required>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

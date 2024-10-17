@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Operations</title>
+    <script>
+        function processString() {
+            const inputStr = document.getElementById('inputStr').value;
+            const firstFiveWords = inputStr.split(" ").slice(0, 5).join(" ");
+            const titleCaseStr = inputStr.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+            const paddedStr = `***${inputStr}***`;
+            const trimmedStr = inputStr.trimStart();
+            const reversedStr = inputStr.split("").reverse().join("");
+
+            document.getElementById('result').innerHTML = `
+                <p><strong>First 5 words:</strong> ${firstFiveWords}</p>
+                <p><strong>Title Case:</strong> ${titleCaseStr}</p>
+                <p><strong>Padded String:</strong> ${paddedStr}</p>
+                <p><strong>Trimmed String:</strong> ${trimmedStr}</p>
+                <p><strong>Reversed String:</strong> ${reversedStr}</p>
+            `;
+        }
+    </script>
+</head>
+<body>
+    <h1>String Operations</h1>
+    <form onsubmit="processString(); return false;">
+        <label for="inputStr">Enter a string:</label><br>
+        <input type="text" id="inputStr" name="inputStr"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+    <div id="result"></div>
+</body>
+</html>

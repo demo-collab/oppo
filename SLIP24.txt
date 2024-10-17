@@ -1,0 +1,23 @@
+<?php
+// Function to append content of one file to another
+function appendFile($sourceFile, $destinationFile) {
+    // Check if the source file exists
+    if (file_exists($sourceFile)) {
+        // Read the content of the source file
+        $content = file_get_contents($sourceFile);
+        
+        // Append content to the destination file
+        file_put_contents($destinationFile, $content, FILE_APPEND);
+        echo "Content of '$sourceFile' has been appended to '$destinationFile'.\n";
+    } else {
+        echo "The file '$sourceFile' does not exist.\n";
+    }
+}
+
+// Read file names from user
+$sourceFile = readline("Enter the name of the source file: ");
+$destinationFile = readline("Enter the name of the destination file: ");
+
+// Call the function to append content
+appendFile($sourceFile, $destinationFile);
+?>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Profile</title>
+    <style>
+        /* CSS Styles */
+        .company-name {
+            background-color: green; /* Background color of company name */
+            color: red;              /* Text color of company name */
+            font-family: 'Comic Sans MS'; /* Font style */
+            font-size: 36px;        /* Large heading */
+            padding: 10px;          /* Padding for better appearance */
+        }
+
+        .description {
+            color: blue;            /* Text color of the description */
+            font-size: 18px;        /* Font size for description */
+        }
+    </style>
+</head>
+<body>
+    <h1 class="company-name">My Company Name</h1>
+    <p class="description">We are dedicated to providing the best services in the industry. Our mission is to ensure customer satisfaction through quality and innovation.</p>
+</body>
+</html>

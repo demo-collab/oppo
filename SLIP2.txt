@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your City Name</title>
+    <style>
+        body {
+            background-color: pink;
+        }
+        h1 {
+            color: blue;
+            text-align: center;
+            font-size: 48px;
+        }
+        .landmark1 {
+            color: red;
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+        }
+        .landmark2 {
+            color: green;
+            font-family: 'Courier New', monospace;
+            font-size: 26px;
+        }
+        .landmark3 {
+            color: orange;
+            font-family: 'Georgia', serif;
+            font-size: 22px;
+        }
+        .landmark4 {
+            color: purple;
+            font-family: 'Verdana', sans-serif;
+            font-size: 28px;
+        }
+        img {
+            display: block;
+            margin: 20px auto;
+            width: 300px; /* Adjust the size as needed */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Your City Name</h1>
+
+    <p class="landmark1">Landmark One</p>
+    <p class="landmark2">Landmark Two</p>
+    <p class="landmark3">Landmark Three</p>
+    <p class="landmark4">Landmark Four</p>
+
+    <img src="your-image-url.jpg" alt="Image of Your City">
+
+</body>
+</html>

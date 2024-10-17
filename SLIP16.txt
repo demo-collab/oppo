@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Marks</title>
+</head>
+<body>
+
+<form method="POST">
+    <table border="1">
+        <tr>
+            <th>Serial No.</th>
+            <th>Subject Name</th>
+            <th>Marks</th>
+        </tr>
+        <?php 
+        $subjects = ['Math', 'Science', 'English', 'History', 'Computer'];
+        for ($i = 0; $i < 5; $i++) {
+            echo "<tr>
+                <td>" . ($i+1) . "</td>
+                <td>" . $subjects[$i] . "</td>
+                <td><input type='text' name='marks[]' /></td>
+            </tr>";
+        }
+        ?>
+    </table>
+    <input type="submit" value="Submit" />
+</form>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $marks = $_POST['marks'];
+    $total = array_sum($marks);
+    $percentage = $total / 5;
+    
+    // Determine grade
+    if ($percentage >= 90) $grade = 'A';
+    elseif ($percentage >= 75) $grade = 'B';
+    elseif ($percentage >= 60) $grade = 'C';
+    else $grade = 'D';
+
+    echo "<h3>Result</h3>";
+    echo "<table border='1'>
+        <tr><th>Total Marks</th><th>Percentage</th><th>Grade</th></tr>
+        <tr><td>$total</td><td>$percentage%</td><td>$grade</td></tr>
+    </table>";
+}
+?>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<?php
+// Function to delete part of a string
+function deleteStringPart($bigString, $position, $length) {
+    return substr_replace($bigString, '', $position, $length);
+}
+
+// Function to insert a string into another string
+function insertString($bigString, $smallString, $position) {
+    return substr_replace($bigString, $smallString, $position, 0);
+}
+
+// Function to replace part of a string
+function replaceStringPart($bigString, $smallString, $position, $length) {
+    return substr_replace($bigString, $smallString, $position, $length);
+}
+
+// Accepting input from the user
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $bigString = $_POST['bigString'];
+    $smallString = $_POST['smallString'];
+    
+    // Deleting part of the string
+    $deletePosition = $_POST['deletePosition'];
+    $deleteLength = $_POST['deleteLength'];
+    $bigString = deleteStringPart($bigString, $deletePosition, $deleteLength);
+    
+    // Inserting the small string
+    $insertPosition = $_POST['insertPosition'];
+    $bigString = insertString($bigString, $smallString, $insertPosition);
+    
+    // Replacing part of the string
+    $replacePosition = $_POST['replacePosition'];
+    $replaceLength = $_POST['replaceLength'];
+    $bigString = replaceStringPart($bigString, $smallString, $replacePosition, $replaceLength);
+    
+    echo "Resulting string: " . $bigString;
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>String Manipulation</title>
+</head>
+<body>
+    <form method="post">
+        <label for="bigString">Enter a sentence (big string):</label><br>
+        <input type="text" id="bigString" name="bigString" required><br><br>
+
+        <label for="smallString">Enter a word (small string):</label><br>
+        <input type="text" id="smallString" name="smallString" required><br><br>
+
+        <label for="deletePosition">Delete position:</label><br>
+        <input type="number" id="deletePosition" name="deletePosition" required><br><br>
+
+        <label for="deleteLength">Delete length:</label><br>
+        <input type="number" id="deleteLength" name="deleteLength" required><br><br>
+
+        <label for="insertPosition">Insert position:</label><br>
+        <input type="number" id="insertPosition" name="insertPosition" required><br><br>
+
+        <label for="replacePosition">Replace position:</label><br>
+        <input type="number" id="replacePosition" name="replacePosition" required><br><br>
+
+        <label for="replaceLength">Replace length:</label><br>
+        <input type="number" id="replaceLength" name="replaceLength" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

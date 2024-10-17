@@ -1,0 +1,77 @@
+<?php
+class Stack {
+    private $stack = [];
+    private $maxSize;
+
+    public function __construct($size) {
+        $this->maxSize = $size;
+    }
+
+    public function isFull() {
+        return count($this->stack) >= $this->maxSize;
+    }
+
+    public function isEmpty() {
+        return empty($this->stack);
+    }
+
+    public function push($item) {
+        if ($this->isFull()) {
+            echo "Stack is full. Cannot insert $item.\n";
+            return;
+        }
+        array_push($this->stack, $item);
+        echo "$item inserted into stack.\n";
+    }
+
+    public function pop() {
+        if ($this->isEmpty()) {
+            echo "Stack is empty. Cannot delete element.\n";
+            return null;
+        }
+        return array_pop($this->stack);
+    }
+
+    public function display() {
+        if ($this->isEmpty()) {
+            echo "Stack is empty.\n";
+            return;
+        }
+        echo "Stack contents: " . implode(", ", array_reverse($this->stack)) . "\n";
+    }
+}
+
+$stack = new Stack(5); // Set maximum stack size
+
+while (true) {
+    echo "\nMenu:\n";
+    echo "1. Insert an element into stack\n";
+    echo "2. Delete an element from stack\n";
+    echo "3. Display the contents of stack\n";
+    echo "4. Exit\n";
+    echo "Enter your choice: ";
+    $choice = trim(fgets(STDIN));
+
+    switch ($choice) {
+        case 1:
+            echo "Enter element to insert: ";
+            $element = trim(fgets(STDIN));
+            $stack->push($element);
+            break;
+        case 2:
+            $removedElement = $stack->pop();
+            if ($removedElement !== null) {
+                echo "$removedElement removed from stack.\n";
+            }
+            break;
+        case 3:
+            $stack->display();
+            break;
+        case 4:
+            echo "Exiting...\n";
+            exit();
+        default:
+            echo "Invalid choice. Please try again.\n";
+    }
+}
+?>

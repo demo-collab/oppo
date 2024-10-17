@@ -1,0 +1,70 @@
+<?php
+
+function displayFileType($filename) {
+    if (file_exists($filename)) {
+        $fileInfo = pathinfo($filename);
+        return $fileInfo['extension'];
+    }
+    return "File does not exist.";
+}
+
+function displayLastModificationTime($filename) {
+    if (file_exists($filename)) {
+        return date("F d Y H:i:s.", filemtime($filename));
+    }
+    return "File does not exist.";
+}
+
+function displayFileSize($filename) {
+    if (file_exists($filename)) {
+        return filesize($filename) . " bytes";
+    }
+    return "File does not exist.";
+}
+
+function deleteFile($filename) {
+    if (file_exists($filename)) {
+        unlink($filename);
+        return "File deleted successfully.";
+    }
+    return "File does not exist.";
+}
+
+do {
+    echo "Menu:\n";
+    echo "1. Display type of file\n";
+    echo "2. Display last modification time of file\n";
+    echo "3. Display the size of file\n";
+    echo "4. Delete the file\n";
+    echo "5. Exit\n";
+    echo "Enter your choice: ";
+    
+    $choice = trim(fgets(STDIN));
+    if ($choice == 5) {
+        break;
+    }
+
+    echo "Enter filename: ";
+    $filename = trim(fgets(STDIN));
+
+    switch ($choice) {
+        case 1:
+            echo "File Type: " . displayFileType($filename) . "\n";
+            break;
+        case 2:
+            echo "Last Modification Time: " . displayLastModificationTime($filename) . "\n";
+            break;
+        case 3:
+            echo "File Size: " . displayFileSize($filename) . "\n";
+            break;
+        case 4:
+            echo deleteFile($filename) . "\n";
+            break;
+        default:
+            echo "Invalid choice. Please try again.\n";
+    }
+    echo "\n";
+} while (true);
+
+echo "Program terminated.\n";
+?>

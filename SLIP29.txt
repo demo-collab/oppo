@@ -1,0 +1,35 @@
+<?php
+$host = 'localhost';
+$db = 'your_database_name';
+$user = 'your_username';
+$pass = 'your_password';
+
+$conn = new mysqli($host, $user, $pass, $db);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$eventTitle = $_POST['event_title'];
+
+$sql = "UPDATE Committee 
+        SET status = 'working' 
+        WHERE cno IN (
+            SELECT cno FROM Event_Committee 
+            WHERE eno IN (
+                SELECT eno FROM Event WHERE title = ?
+            )
+        )";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $eventTitle);
+
+if ($stmt->execute()) {
+    echo "Committee status updated to 'working' for event: " . $eventTitle;
+} else {
+    echo "Error updating status: " . $stmt->error;
+}
+
+$stmt->close();
+$conn->close();
+?>

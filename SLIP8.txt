@@ -1,0 +1,47 @@
+//index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Comparison Form</title>
+</head>
+<body>
+    <h1>String Comparison</h1>
+    <form action="process.php" method="post">
+        <label for="largeString">Large String:</label><br>
+        <input type="text" id="largeString" name="largeString" required><br><br>
+        
+        <label for="smallString">Small String:</label><br>
+        <input type="text" id="smallString" name="smallString" required><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+//process.php
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve strings from the form
+    $largeString = $_POST['largeString'];
+    $smallString = $_POST['smallString'];
+
+    // a. Check if the small string appears at the start of the large string
+    $startsWith = strpos($largeString, $smallString) === 0;
+
+    // b. Find the position of the small string in the large string
+    $position = strpos($largeString, $smallString);
+
+    // c. Compare both strings for the first n characters (case insensitive)
+    $n = min(strlen($largeString), strlen($smallString)); // Compare up to the length of the shorter string
+    $comparison = strncasecmp($largeString, $smallString, $n) === 0;
+
+    // Output results
+    echo "<h2>Results:</h2>";
+    echo "<p>Does the small string appear at the start of the large string? " . ($startsWith ? "Yes" : "No") . "</p>";
+    echo "<p>Position of the small string in the large string: " . ($position !== false ? $position : "Not found") . "</p>";
+    echo "<p>Do the first $n characters match (case insensitive)? " . ($comparison ? "Yes" : "No") . "</p>";
+} else {
+    echo "<p>No data submitted.</p>";
+}
+?>

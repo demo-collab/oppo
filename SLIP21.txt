@@ -1,0 +1,21 @@
+<?php
+// Create an array of 15 high temperatures (in degrees Fahrenheit)
+$high_temperatures = [65, 70, 75, 68, 72, 78, 80, 74, 73, 77, 82, 85, 90, 88, 79];
+
+// Calculate the average high temperature
+$average_temp = array_sum($high_temperatures) / count($high_temperatures);
+
+// Find the five warmest high temperatures
+sort($high_temperatures);
+$warmest_temps = array_slice($high_temperatures, -5);
+
+// Display the results
+echo "<h1>Spring High Temperatures</h1>";
+echo "<p>Average High Temperature: " . round($average_temp, 2) . "°F</p>";
+echo "<h2>Five Warmest High Temperatures:</h2>";
+echo "<ul>";
+foreach ($warmest_temps as $temp) {
+    echo "<li>" . $temp . "°F</li>";
+}
+echo "</ul>";
+?>

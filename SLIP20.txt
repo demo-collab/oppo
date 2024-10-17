@@ -1,0 +1,48 @@
+<?php
+function splitArrayIntoChunks($array, $chunkSize) {
+    return array_chunk($array, $chunkSize, true);
+}
+
+function sortArrayByValues($array) {
+    asort($array);
+    return $array;
+}
+
+function filterEvenElements($array) {
+    return array_filter($array, function($value) {
+        return $value % 2 == 0;
+    });
+}
+
+do {
+    echo "Menu:\n";
+    echo "1. Split array into chunks\n";
+    echo "2. Sort array by values\n";
+    echo "3. Filter even elements\n";
+    echo "4. Exit\n";
+    echo "Enter your choice: ";
+    $choice = intval(trim(fgets(STDIN)));
+
+    switch ($choice) {
+        case 1:
+            echo "Enter chunk size: ";
+            $chunkSize = intval(trim(fgets(STDIN)));
+            $array = ['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5];
+            print_r(splitArrayIntoChunks($array, $chunkSize));
+            break;
+        case 2:
+            $array = ['a' => 5, 'b' => 2, 'c' => 4, 'd' => 3, 'e' => 1];
+            print_r(sortArrayByValues($array));
+            break;
+        case 3:
+            $array = ['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5];
+            print_r(filterEvenElements($array));
+            break;
+        case 4:
+            echo "Exiting...\n";
+            break;
+        default:
+            echo "Invalid choice, please try again.\n";
+    }
+} while ($choice != 4);
+?>
